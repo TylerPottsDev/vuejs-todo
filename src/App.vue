@@ -1,28 +1,76 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div id="app">
+		<Header v-on:createTodo="createTodo" />
+		<Todos v-bind:todos="todos" v-on:removeTodo="removeTodo" />
+	</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+	import Header from './components/Header';
+	import Todos from './components/Todos';
 
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+	let todos = [
+		{
+			id: "1",
+			name: "Record Video",
+			done: false
+		},
+		{
+			id: "2",
+			name: "Upload Video",
+			done: false
+		},
+		{
+			id: "3",
+			name: "partayy",
+			done: false
+		},
+		{
+			id: "4",
+			name: "Debug",
+			done: false
+		},
+		{
+			id: "5",
+			name: "More Debug",
+			done: false
+		}
+	];
+
+	export default {
+		name: 'app',
+		components: {
+			Header,
+			Todos
+		},
+		data: function () {
+			return {
+				todos: todos
+			}
+		},
+		methods: {
+			createTodo: function (todo) {
+				let todoObject = {
+					id: Math.floor(Math.random() * 10000000),
+					name: todo,
+					done: false
+				}
+
+				this.todos.push(todoObject);
+			},
+			removeTodo: function (id) {
+				this.todos = this.todos.filter(todo => todo.id != id);
+			}
+		}
+	}
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+	body {
+		margin: 0;
+		padding: 0;
+		background-color: #F3F3F3;
+
+		font-family: Arial, Helvetica, sans-serif;
+	}
 </style>
